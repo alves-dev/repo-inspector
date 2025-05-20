@@ -1,0 +1,11 @@
+[project]
+name = "repo-inspector"
+version = "0.1.0"
+description = "Script responsavel por validar repositorios"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic-settings>=2.9.1",
+    "python-dotenv>=1.1.0",
+    "redis>=6.1.0",
+    "requests>=2.32.3",
+]
