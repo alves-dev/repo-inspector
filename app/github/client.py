@@ -15,7 +15,7 @@ class GithubClient:
 
     @classmethod
     def get_repos_by_token(cls) -> list[Repository]:
-        page_size = 100
+        page_size = setting.GITHUB_PAGE_SIZE
         url = f'{setting.GITHUB_BASE_URL}/user/repos?per_page={page_size}'
 
         response = requests.get(url, headers=headers)

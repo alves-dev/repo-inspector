@@ -9,6 +9,11 @@ class Settings(BaseSettings):
     REDIS_USERNAME: str = None
     REDIS_PASSWORD: str = None
 
+    # GITHUB_BASE_URL
+    GITHUB_BASE_URL: str = 'https://api.github.com'
+    GITHUB_TOKEN: str = None
+    GITHUB_PAGE_SIZE: int = 100
+
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
