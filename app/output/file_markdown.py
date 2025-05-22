@@ -1,16 +1,15 @@
 from collections import defaultdict
 from datetime import datetime
-from pathlib import Path
-import json
+
 from app.verification.model import RepoVerificationResult
 
 
-def save_to_markdown(results: dict[str: list[RepoVerificationResult]]):
-    root_path = Path(__file__).parent.parent.parent.resolve()
-    filepath = root_path / "output-results" / "inspector-report.md"
+def save_grouped_by_repository(results: dict[str: list[RepoVerificationResult]], filepath: str):
+    time = str(datetime.now().strftime("%Y-%m-%d %H:%M"))
+    title = f'# Inspector - Resultados em {time}\n\n'
 
     with open(filepath, "w", encoding="utf-8") as f:
-        f.write(__get_title())
+        f.write(title)
         for repo, verifications in results.items():
             f.write(f"## {repo}\n\n")
             f.write("| Verificação | Descrição | Status |\n")
@@ -21,18 +20,18 @@ def save_to_markdown(results: dict[str: list[RepoVerificationResult]]):
             f.write("\n")
 
 
-def save_grouped_by_verification(results: dict[str, list[RepoVerificationResult]]):
-    root_path = Path(__file__).parent.parent.parent.resolve()
-    filepath = root_path / "output-results" / "inspector-grouped-report.md"
-
+def save_grouped_by_verification(results: dict[str, list[RepoVerificationResult]], filepath: str):
     grouped = defaultdict(list)
 
     for repo, verifications in results.items():
         for v in verifications:
             grouped[v.key].append((repo, v))
 
+    time = str(datetime.now().strftime("%Y-%m-%d %H:%M"))
+    title = f'# Repo Inspector - Visão por Verificação - Resultados em {time}\n\n'
+
     with open(filepath, "w", encoding="utf-8") as f:
-        f.write("# Repo Inspector - Visão por Verificação\n\n")
+        f.write(title)
         for key, items in grouped.items():
             f.write(f"## {key}\n\n")
             f.write("| Repositório | Descrição | Status |\n")
@@ -43,10 +42,7 @@ def save_grouped_by_verification(results: dict[str, list[RepoVerificationResult]
             f.write("\n")
 
 
-def save_summary(results: dict[str, list[RepoVerificationResult]]):
-    root_path = Path(__file__).parent.parent.parent.resolve()
-    filepath = root_path / "output-results" / "inspector-summary.md"
-
+def save_summary(results: dict[str, list[RepoVerificationResult]], filepath: str):
     rule_pass_count = defaultdict(int)
     rule_fail_count = defaultdict(int)
     repos_passed_all = []
@@ -88,8 +84,3 @@ def save_summary(results: dict[str, list[RepoVerificationResult]]):
         for repo, count in repos_multiple_failures:
             f.write(f"- {repo} (falhou em {count} regras)\n")
         f.write(f"\nTotal: {len(repos_multiple_failures)}\n")
-
-
-def __get_title() -> str:
-    time = str(datetime.now().strftime("%Y-%m-%d %H:%M"))
-    return f'# Inspector - Resultados em {time}\n\n'

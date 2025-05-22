@@ -1,12 +1,12 @@
 import json
 from pathlib import Path
+
 import matplotlib.pyplot as plt
 
-def generate_summary_charts():
-    root_path = Path(__file__).parent.parent.parent.resolve()
-    json_path = root_path / "output-results" / "inspector-summary.json"
-    output_dir = root_path / "output-results"
-    output_dir.mkdir(parents=True, exist_ok=True)
+
+def generate_summary_charts(base_path: Path):
+    json_path = f'{base_path}/inspector-summary.json'
+    output_dir = base_path
 
     with open(json_path, encoding="utf-8") as f:
         summary = json.load(f)

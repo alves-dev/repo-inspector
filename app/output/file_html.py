@@ -1,11 +1,4 @@
-from pathlib import Path
-
-
-def generate_dashboard_html():
-    root_path = Path(__file__).parent.parent.parent.resolve()
-    output_dir = root_path / "output-results"
-    html_path = output_dir / "inspector-dashboard.html"
-
+def generate_dashboard(filepath: str):
     html_content = f"""
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -76,5 +69,5 @@ def generate_dashboard_html():
 </html>
 """
 
-    with open(html_path, "w", encoding="utf-8") as f:
+    with open(filepath, "w", encoding="utf-8") as f:
         f.write(html_content)

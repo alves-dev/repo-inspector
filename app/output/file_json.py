@@ -1,14 +1,10 @@
 import json
 from collections import defaultdict
-from pathlib import Path
 
 from app.verification.model import RepoVerificationResult
 
 
-def save_summary_json(results: dict[str, list[RepoVerificationResult]]):
-    root_path = Path(__file__).parent.parent.parent.resolve()
-    filepath = root_path / "output-results" / "inspector-summary.json"
-
+def save_summary(results: dict[str, list[RepoVerificationResult]], filepath: str):
     rule_summary = defaultdict(lambda: {"passed": 0, "failed": 0})
     repos_passed_all = []
     repos_multiple_failures = []
