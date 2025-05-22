@@ -14,7 +14,7 @@ def save_reports(results: dict[str: list[RepoVerificationResult]]):
     base_path = root_path / "output-results"
     base_history = root_path / "output-results" / time_history
 
-    base_history.mkdir(exist_ok=True)
+    base_history.mkdir(parents=True, exist_ok=True)
 
     markdown.save_grouped_by_repository(results, f'{base_path}/inspector-report.md')
     markdown.save_grouped_by_repository(results, f'{base_history}/inspector-report.md')

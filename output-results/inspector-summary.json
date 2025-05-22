@@ -1,0 +1,29 @@
+{
+    "rules": {
+        "git.project.name": {
+            "passed": 9,
+            "failed": 6
+        },
+        "git.project.description": {
+            "passed": 4,
+            "failed": 11
+        }
+    },
+    "repos_passed_all": [
+        "ai-extraction"
+    ],
+    "repos_multiple_failures": [
+        {
+            "repo": "api_front_telegram",
+            "fail_count": 2
+        },
+        {
+            "repo": "class_system",
+            "fail_count": 2
+        },
+        {
+            "repo": "Fazenda",
+            "fail_count": 2
+        }
+    ]
+}
