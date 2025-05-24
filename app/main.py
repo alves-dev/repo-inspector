@@ -23,7 +23,8 @@ if __name__ == "__main__":
 
         repo_map[repo.name] = repo_verifications
 
-    output.save_reports(repo_map)
+    # output.save_reports(repo_map)
+    output.save_report_repo(repo_map, repositories)
 
     store = get_store()
     time = str(datetime.now().strftime('%Y-%m-%d %H:%M'))

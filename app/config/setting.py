@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     GITHUB_BASE_URL: str = 'https://api.github.com'
     GITHUB_TOKEN: str = None
     GITHUB_PAGE_SIZE: int = 100
+    GITHUB_REPO_URL_SAVE_FILES: str = None
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"

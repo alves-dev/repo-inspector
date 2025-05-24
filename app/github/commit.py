@@ -21,7 +21,7 @@ class Commit:
         folder_path = Path(str(self.repo_path) + '/server-files/repo-inspector/')
         full_file_path = folder_path.joinpath(file_name)
 
-        folder_path.mkdir(parents=True)
+        folder_path.mkdir(parents=True, exist_ok=True)
 
         with open(full_file_path, "w") as f:
             f.write(text_to_write)
