@@ -1,5 +1,4 @@
 import shutil
-import time
 from pathlib import Path
 
 import git
@@ -29,6 +28,8 @@ class Commit:
     def commit_and_push(self, commit_message: str) -> bool:
         try:
             self.repo.git.add(A=True)
+            self.repo.git.config("user.name", "repo-inspector")
+            self.repo.git.config("user.email", "comit@repoinspector.com")
             self.repo.git.commit("-m", commit_message)
             self.repo.git.push("--set-upstream", self.repo_url_with_token, 'main')
             return True
@@ -44,6 +45,4 @@ class Commit:
 
     def __remove_repo_folder(self):
         path = self.repo_path
-
-        time.sleep(1)
         shutil.rmtree(path)
