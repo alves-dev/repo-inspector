@@ -72,10 +72,15 @@ def inspector_summary(results: dict[str, list[RepoVerificationResult]], reposito
         else:
             count['public'] += 1
 
+    rule_summary_list = [
+        {"rule": key, **value}
+        for key, value in rule_summary.items()
+    ]
+
     summary = {
         "repos_count": count,
         "rules": list(rules),
-        "rules_detail": rule_summary,
+        "rules_detail": rule_summary_list,
         "repos_passed_all": repos_passed_all,
         "repos_multiple_failures": repos_multiple_failures
     }
