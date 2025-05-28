@@ -8,8 +8,7 @@ class ProjectDescriptionVerification(VerificationInterface):
     KEY = 'git.project.description'
     DESCRIPTION = 'Verifica se tem uma boa descrição'
 
-    PASSED = [RepoVerificationResult.of_passed(KEY, DESCRIPTION)]
-    FAILURE = [RepoVerificationResult.of_failure(KEY, DESCRIPTION)]
+    PASSED = [RepoVerificationResult.of_passed(KEY, '')]
 
     @classmethod
     def verify(cls, repository: Repository) -> list[RepoVerificationResult]:
@@ -17,7 +16,10 @@ class ProjectDescriptionVerification(VerificationInterface):
 
         description = repo.get('description', "")
 
-        if description is not None and len(description) >= 15:
-            return cls.PASSED
-        else:
-            return cls.FAILURE
+        if description is None:
+            return [RepoVerificationResult.of_failure(cls.KEY, 'Sem descrição.')]
+
+        if len(description) < 15:
+            return [RepoVerificationResult.of_failure(cls.KEY, 'Descrição com menos de 15 caracteres.')]
+
+        return cls.PASSED

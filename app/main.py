@@ -5,13 +5,17 @@ from app.github.models import Repository
 from app.output import manager as output
 from app.repository.store import get_store
 from app.verification.model import RepoVerificationResult
+from app.verification.verification_branch import ProjectBranchVerification
 from app.verification.verification_description import ProjectDescriptionVerification
+from app.verification.verification_license import ProjectLicenseVerification
 from app.verification.verification_name import ProjectNameVerification
+from app.verification.verification_updated import ProjectUpdatedVerification
 
 if __name__ == "__main__":
     repositories: list[Repository] = gitClient.get_repos_by_token()
 
-    verifications = [ProjectNameVerification, ProjectDescriptionVerification]
+    verifications = [ProjectNameVerification, ProjectDescriptionVerification, ProjectUpdatedVerification,
+                     ProjectBranchVerification, ProjectLicenseVerification]
 
     repo_map: dict[str: list[RepoVerificationResult]] = {}
 

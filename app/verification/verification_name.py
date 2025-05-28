@@ -17,7 +17,7 @@ class ProjectNameVerification(VerificationInterface):
     KEY = 'git.project.name'
     DESCRIPTION = 'Verifica se segue o padrão de nomenclatura'
 
-    PASSED = [RepoVerificationResult.of_passed(KEY, DESCRIPTION)]
+    PASSED = [RepoVerificationResult.of_passed(KEY, '')]
     FAILURE = [RepoVerificationResult.of_failure(KEY, DESCRIPTION)]
 
     @classmethod
