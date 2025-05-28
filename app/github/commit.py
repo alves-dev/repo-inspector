@@ -17,7 +17,7 @@ class Commit:
         self.repo: Repo = self.__clone_repo()
 
     def write_file(self, file_name: str, text_to_write: str):
-        folder_path = Path(str(self.repo_path) + '/server-files/repo-inspector/')
+        folder_path = Path(str(self.repo_path) + '/repo-inspector/')
         full_file_path = folder_path.joinpath(file_name)
 
         folder_path.mkdir(parents=True, exist_ok=True)

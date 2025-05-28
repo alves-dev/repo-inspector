@@ -27,13 +27,16 @@ def inspector_detailed(results: dict[str, list[RepoVerificationResult]], reposit
 
         # Adiciona as verificações como chaves booleanas
         failed_count = 0
+        failure_description = ''
         for v in verifications:
             repo_entry[v.key] = v.passed
 
             if not v.passed:
                 failed_count += 1
+                failure_description += v.description + '\n'
 
         repo_entry['total_not_passed'] = failed_count
+        repo_entry['failure_description'] = failure_description
 
         full_data.append(repo_entry)
 
