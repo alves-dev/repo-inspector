@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     REDIS_USERNAME: str = None
     REDIS_PASSWORD: str = None
 
-    # GITHUB_BASE_URL
+    # GITHUB
     GITHUB_BASE_URL: str = 'https://api.github.com'
     GITHUB_TOKEN: str = None
     GITHUB_PAGE_SIZE: int = 100
