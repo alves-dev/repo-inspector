@@ -9,13 +9,14 @@ from app.verification.verification_branch import ProjectBranchVerification
 from app.verification.verification_description import ProjectDescriptionVerification
 from app.verification.verification_license import ProjectLicenseVerification
 from app.verification.verification_name import ProjectNameVerification
+from app.verification.verification_topics import ProjectTopicsVerification
 from app.verification.verification_updated import ProjectUpdatedVerification
 
 if __name__ == "__main__":
     repositories: list[Repository] = gitClient.get_repos_by_token()
 
     verifications = [ProjectNameVerification, ProjectDescriptionVerification, ProjectUpdatedVerification,
-                     ProjectBranchVerification, ProjectLicenseVerification]
+                     ProjectBranchVerification, ProjectLicenseVerification, ProjectTopicsVerification]
 
     repo_map: dict[str: list[RepoVerificationResult]] = {}
 

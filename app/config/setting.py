@@ -1,3 +1,5 @@
+from typing import List
+
 import dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -14,6 +16,7 @@ class Settings(BaseSettings):
     GITHUB_TOKEN: str = None
     GITHUB_PAGE_SIZE: int = 100
     GITHUB_REPO_URL_SAVE_FILES: str = None
+    GITHUB_TOPICS: List[str] = ['ai', 'spring-boot']
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
