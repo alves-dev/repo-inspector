@@ -1,3 +1,5 @@
+import base64
+
 import requests
 
 from app.config.setting import setting
@@ -44,6 +46,21 @@ class GithubClient:
         else:
             print(f'status_code {response.status_code}, body: Error: Erro na requisição {url}')
             return {}
+
+    @classmethod
+    def get_file(cls, repo_url: str, file_path: str) -> str | None:
+        repo_name = repo_url.split("/")[-1].replace(".git", "")
+        repo_user = repo_url.split("/")[-2]
+
+        url = f'{setting.GITHUB_BASE_URL}/repos/{repo_user}/{repo_name}/contents/{file_path}'
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            return base64.b64decode(data['content']).decode('utf-8')
+        else:
+            print(f'File not found in: {url}')
+            return None
 
     @staticmethod
     def __log_info(page_size: int, response: dict):

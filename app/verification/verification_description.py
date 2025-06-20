@@ -4,9 +4,9 @@ from app.verification.model import RepoVerificationResult
 from app.verification.verification import VerificationInterface
 
 
-class ProjectDescriptionVerification(VerificationInterface):
-    KEY = 'git.project.description'
-    DESCRIPTION = 'Verifica se tem uma boa descrição'
+class RepositoryDescriptionVerification(VerificationInterface):
+    KEY = 'git.repository.description'
+    DESCRIPTION = 'Verifica se tem uma descrição'
 
     PASSED = [RepoVerificationResult.of_passed(KEY, '')]
 

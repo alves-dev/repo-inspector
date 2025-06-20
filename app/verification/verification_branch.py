@@ -4,8 +4,8 @@ from app.verification.model import RepoVerificationResult
 from app.verification.verification import VerificationInterface
 
 
-class ProjectBranchVerification(VerificationInterface):
-    KEY = 'git.project.branch.default'
+class RepositoryBranchVerification(VerificationInterface):
+    KEY = 'git.repository.branch.default'
     DESCRIPTION = "Verifica se a branch default é a 'main'"
     DEFAULT= 'main'
 

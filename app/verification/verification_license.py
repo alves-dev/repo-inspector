@@ -4,8 +4,8 @@ from app.verification.model import RepoVerificationResult
 from app.verification.verification import VerificationInterface
 
 
-class ProjectLicenseVerification(VerificationInterface):
-    KEY = 'git.project.license'
+class RepositoryLicenseVerification(VerificationInterface):
+    KEY = 'git.repository.license'
     DESCRIPTION = "Verifica se existe uma licença para repos públicos"
 
     PASSED = [RepoVerificationResult.of_passed(KEY, '')]

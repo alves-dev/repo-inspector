@@ -5,8 +5,8 @@ from app.verification.model import RepoVerificationResult
 from app.verification.verification import VerificationInterface
 
 
-class ProjectTopicsVerification(VerificationInterface):
-    KEY = 'git.project.topics'
+class RepositoryTopicsVerification(VerificationInterface):
+    KEY = 'git.repository.topics'
     DESCRIPTION = "Verifica os topics"
 
     PASSED = [RepoVerificationResult.of_passed(KEY, '')]

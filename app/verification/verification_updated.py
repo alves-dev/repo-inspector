@@ -5,9 +5,9 @@ from app.verification.model import RepoVerificationResult
 from app.verification.verification import VerificationInterface
 
 
-class ProjectUpdatedVerification(VerificationInterface):
-    KEY = 'git.project.updated'
-    DESCRIPTION = 'Verifica se projeto tem muitos dias sem atualização'
+class RepositoryUpdatedVerification(VerificationInterface):
+    KEY = 'git.repository.updated'
+    DESCRIPTION = 'Verifica se o repositorio tem muitos dias sem atualização'
     DAYS = 100
 
     PASSED = [RepoVerificationResult.of_passed(KEY, '')]

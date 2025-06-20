@@ -13,8 +13,8 @@ def is_kebab_case(text: str) -> bool:
     return bool(re.fullmatch(r"[a-z]+(-[a-z]+)*", text))
 
 
-class ProjectNameVerification(VerificationInterface):
-    KEY = 'git.project.name'
+class RepositoryNameVerification(VerificationInterface):
+    KEY = 'git.repository.name'
     DESCRIPTION = 'Verifica se segue o padrão de nomenclatura'
 
     PASSED = [RepoVerificationResult.of_passed(KEY, '')]
