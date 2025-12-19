@@ -1,5 +1,3 @@
-from typing import List
-
 import dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,7 +14,12 @@ class Settings(BaseSettings):
     GITHUB_TOKEN: str = None
     GITHUB_PAGE_SIZE: int = 100
     GITHUB_REPO_URL_SAVE_FILES: str = None
-    GITHUB_TOPICS: List[str] = ['ai', 'spring-boot']
+
+    # Inspector Loader
+    INSPECTOR_GET_URL: str = ""
+    INSPECTOR_POST_URL: str = ""
+    INSPECTOR_API_KEY: str = ""
+    INSPECTOR_YAML_PATH: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"

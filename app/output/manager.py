@@ -1,6 +1,11 @@
 import json
+import logging
+from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
+from app.config.setting import setting
+
+import requests
 
 from app.github.commit import Commit
 from app.github.models import Repository
@@ -49,3 +54,34 @@ def save_report_repo(results: dict[str: list[RepoVerificationResult]], repositor
     commit.write_file('inspector-summary.json', summary_json)
 
     commit.commit_and_push('inspector-reports')
+
+
+def post_report(results: dict[str, list[RepoVerificationResult]]) -> None:
+    if setting.INSPECTOR_POST_URL is None or setting.INSPECTOR_POST_URL == "":
+        logging.warning("INSPECTOR_POST_URL not set")
+        return
+
+    payload = []
+
+    headers = {
+        "x-api-key": setting.INSPECTOR_API_KEY
+    }
+
+    for repo_name, verifications in results.items():
+        payload = [
+            {
+                "repository": repo_name,
+                **asdict(result),
+                "severity": result.severity.value  # Enum -> str
+            }
+            for result in verifications
+        ]
+
+    response = requests.post(
+        setting.INSPECTOR_POST_URL,
+        json=payload,
+        timeout=10,
+        headers=headers
+    )
+
+    response.raise_for_status()

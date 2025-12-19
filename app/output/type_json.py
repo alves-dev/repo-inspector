@@ -33,7 +33,7 @@ def inspector_detailed(results: dict[str, list[RepoVerificationResult]], reposit
 
             if not v.passed:
                 failed_count += 1
-                failure_description += v.description + ' --- '
+                failure_description += v.rule_description + ' --- '
 
         repo_entry['total_not_passed'] = failed_count
         repo_entry['failure_description'] = failure_description

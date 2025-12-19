@@ -2,23 +2,32 @@ import yaml
 
 from app.github.client import GithubClient
 from app.github.models import Repository
-from app.verification.model import RepoVerificationResult
+from app.verification.model import RepoVerificationResult, Severity, InspectorConfig
 from app.verification.verification import VerificationInterface
 
 
 class RepositoryFileRepositoryYMLVerification(VerificationInterface):
     KEY = 'git.repository.file.repository-yml'
-    DESCRIPTION = "Verifica se existe o repository.yml na raiz do repo e se é valido"
+    RULE_DESCRIPTION = "Verifica se existe o repository.yml na raiz do repo e se é valido"
+    SEVERITY = Severity.ERROR
 
-    PASSED = [RepoVerificationResult.of_passed(KEY, '')]
+    PASSED = RepoVerificationResult.passed(
+        KEY,
+        RULE_DESCRIPTION,
+        SEVERITY
+    )
 
     @classmethod
-    def verify(cls, repository: Repository) -> list[RepoVerificationResult]:
+    def verify(cls, repository: Repository, config: InspectorConfig) -> RepoVerificationResult:
         file_name = 'repository.yml'
         file_data: str | None = GithubClient.get_file(repository.url, file_name)
 
         if file_data is None:
-            return [RepoVerificationResult.of_failure(cls.KEY, f'Repo sem o {file_name}')]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                f'Repo sem o {file_name}')
 
         metadata: dict = yaml.safe_load(file_data)
 
@@ -31,22 +40,42 @@ class RepositoryFileRepositoryYMLVerification(VerificationInterface):
 
         for key in required_keys:
             if key not in metadata:
-                return [RepoVerificationResult.of_failure(cls.KEY, f"{file_name} sem a key '{key}'")]
+                return RepoVerificationResult.failure(
+                    cls.KEY,
+                    cls.RULE_DESCRIPTION,
+                    cls.SEVERITY,
+                    f"{file_name} sem a key '{key}'")
 
         if metadata['repository']['license'] not in repository_licenses:
-            return [RepoVerificationResult.of_failure(cls.KEY, 'Licença invalida')]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                "Licença invalida")
 
         if metadata['repository']['type'] not in repository_types:
-            return [RepoVerificationResult.of_failure(cls.KEY, 'Tipo invalido')]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                "Tipo invalido")
 
         if metadata['repository']['type'] != 'code':
             return cls.PASSED
 
         if metadata['project']['status'] not in project_status:
-            return [RepoVerificationResult.of_failure(cls.KEY, 'Status do projeto invalido')]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                "Status do projeto invalido")
 
         protocols = set(metadata['project']['protocols']) - set(project_protocols)
         if protocols:
-            return [RepoVerificationResult.of_failure(cls.KEY, f"Protocolos invalidos: {', '.join(protocols)}")]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                f"Protocolos invalidos: {', '.join(protocols)}")
 
         return cls.PASSED

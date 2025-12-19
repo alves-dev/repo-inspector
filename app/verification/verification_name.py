@@ -1,7 +1,7 @@
 import re
 
 from app.github.models import Repository
-from app.verification.model import RepoVerificationResult
+from app.verification.model import RepoVerificationResult, Severity, InspectorConfig
 from app.verification.verification import VerificationInterface
 
 
@@ -15,14 +15,21 @@ def is_kebab_case(text: str) -> bool:
 
 class RepositoryNameVerification(VerificationInterface):
     KEY = 'git.repository.name'
-    DESCRIPTION = 'Verifica se segue o padrão de nomenclatura'
-
-    PASSED = [RepoVerificationResult.of_passed(KEY, '')]
-    FAILURE = [RepoVerificationResult.of_failure(KEY, DESCRIPTION)]
+    RULE_DESCRIPTION = 'Verifica se segue o padrão de nomenclatura'
+    SEVERITY = Severity.ERROR
 
     @classmethod
-    def verify(cls, repository: Repository) -> list[RepoVerificationResult]:
+    def verify(cls, repository: Repository, config: InspectorConfig) -> RepoVerificationResult:
         if is_kebab_case(repository.name):
-            return cls.PASSED
+            return RepoVerificationResult.passed(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY
+            )
         else:
-            return cls.FAILURE
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                "Fora do kebab-case, Exemplo válido: meu-exemplo-de-string"
+            )

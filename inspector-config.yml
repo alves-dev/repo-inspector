@@ -1,0 +1,10 @@
+github_topics:
+  - ai
+  - spring-boot
+
+ignored_rules_by_repo:
+  repo-inspector:
+    - git.repository.description
+    - git.repository.topics
+
+max_days_without_update: 120

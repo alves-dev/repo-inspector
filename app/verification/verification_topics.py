@@ -1,28 +1,39 @@
-from app.config.setting import setting
 from app.github.client import GithubClient
 from app.github.models import Repository
-from app.verification.model import RepoVerificationResult
+from app.verification.model import RepoVerificationResult, Severity, InspectorConfig
 from app.verification.verification import VerificationInterface
 
 
 class RepositoryTopicsVerification(VerificationInterface):
     KEY = 'git.repository.topics'
-    DESCRIPTION = "Verifica os topics"
-
-    PASSED = [RepoVerificationResult.of_passed(KEY, '')]
+    RULE_DESCRIPTION = "Verifica os topics"
+    SEVERITY = Severity.WARNING
 
     @classmethod
-    def verify(cls, repository: Repository) -> list[RepoVerificationResult]:
+    def verify(cls, repository: Repository, config: InspectorConfig) -> RepoVerificationResult:
         repo: dict = GithubClient.get_repo_by_url(repository.url)
         topics = repo.get('topics', [])
 
         if not topics:
-            return [RepoVerificationResult.of_failure(cls.KEY, 'Nenhum topic definido')]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                "Nenhum topic definido"
+            )
 
-        accepted = setting.GITHUB_TOPICS
-        missing = set(topics) - set(accepted)
+        missing = set(topics) - set(config.github_topics)
 
         if missing:
-            return [RepoVerificationResult.of_failure(cls.KEY, f"Topics não permitidos: {', '.join(missing)}")]
+            return RepoVerificationResult.failure(
+                cls.KEY,
+                cls.RULE_DESCRIPTION,
+                cls.SEVERITY,
+                f"Topics não permitidos: {', '.join(missing)}"
+            )
 
-        return cls.PASSED
+        return RepoVerificationResult.passed(
+            cls.KEY,
+            cls.RULE_DESCRIPTION,
+            cls.SEVERITY
+        )
