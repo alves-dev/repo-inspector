@@ -3,10 +3,10 @@ import logging
 from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
-from app.config.setting import setting
 
 import requests
 
+from app.config.setting import setting
 from app.github.commit import Commit
 from app.github.models import Repository
 from app.output import file_html as html
@@ -68,14 +68,14 @@ def post_report(results: dict[str, list[RepoVerificationResult]]) -> None:
     }
 
     for repo_name, verifications in results.items():
-        payload = [
+        payload.extend([
             {
                 "repository": repo_name,
                 **asdict(result),
                 "severity": result.severity.value  # Enum -> str
             }
             for result in verifications
-        ]
+        ])
 
     response = requests.post(
         setting.INSPECTOR_POST_URL,
