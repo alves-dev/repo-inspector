@@ -31,6 +31,11 @@ if __name__ == "__main__":
 
     for repo in repositories:
         repo_verifications: list[RepoVerificationResult] = []
+        if (repo.name in inspect_config.ignored_rules_by_repo.keys()
+                and '*' in inspect_config.ignored_rules_by_repo[repo.name]):
+            repo_map[repo.name] = repo_verifications
+            continue
+
         for verification in verifications:
             result: RepoVerificationResult = verification.verify(repo, inspect_config)
             repo_verifications.append(result)
@@ -38,7 +43,7 @@ if __name__ == "__main__":
         repo_map[repo.name] = repo_verifications
 
     output.save_report_repo(repo_map, repositories)
-    output.post_report(repo_map)
+    output.post_report(repo_map, repositories)
 
     store = get_store()
     time = str(datetime.now().strftime('%Y-%m-%d %H:%M'))

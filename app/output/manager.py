@@ -56,10 +56,13 @@ def save_report_repo(results: dict[str: list[RepoVerificationResult]], repositor
     commit.commit_and_push('inspector-reports')
 
 
-def post_report(results: dict[str, list[RepoVerificationResult]]) -> None:
+def post_report(results: dict[str, list[RepoVerificationResult]], repositories: list[Repository]) -> None:
     if setting.INSPECTOR_POST_URL is None or setting.INSPECTOR_POST_URL == "":
         logging.warning("INSPECTOR_POST_URL not set")
         return
+
+    # Indexa os dados dos repositórios por nome
+    repo_map : dict[str, Repository] = {repo.name: repo for repo in repositories}
 
     payload = []
 
@@ -68,8 +71,18 @@ def post_report(results: dict[str, list[RepoVerificationResult]]) -> None:
     }
 
     for repo_name, verifications in results.items():
+        repo :Repository = repo_map.get(repo_name)
+        if not repo:
+            continue  # Pula se o repositório não estiver na lista
+
         payload.extend([
             {
+                "id": repo.id,
+                "name": repo.name,
+                "url": repo.url,
+                "private": repo.private,
+                "updated_at": repo.updated_at,
+                "language": repo.language,
                 "repository": repo_name,
                 **asdict(result),
                 "severity": result.severity.value  # Enum -> str
