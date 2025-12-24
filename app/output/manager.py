@@ -79,7 +79,7 @@ def post_report(results: dict[str, list[RepoVerificationResult]], repositories: 
             {
                 "id": repo.id,
                 "name": repo.name,
-                "url": repo.url,
+                "url": repo.html_url,
                 "private": repo.private,
                 "updated_at": repo.updated_at,
                 "language": repo.language,
