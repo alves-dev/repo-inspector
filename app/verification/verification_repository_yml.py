@@ -36,18 +36,16 @@ class RepositoryFileRepositoryYMLVerification(VerificationInterface):
 
         metadata: dict = yaml.safe_load(file_data)
 
-        # Validações da versão: V1
-        required_keys = ['repository']
+        required_keys: list = config.repo_yml.get('required_keys', [])
 
-        repository_licenses = ['GPL-3', 'MIT', 'NOT-LICENSE']
-        repository_types = ['code', 'infra', 'documentation', 'data', 'profile']
+        repository_licenses = config.repo_yml.get('repository', {}).get('licenses', [])
+        repository_types = config.repo_yml.get('repository', {}).get('types', [])
 
-        project_status = ['development', 'maintenance', 'deprecated', 'archived']
-
-        project_language = ['java', 'kotlin', 'go', 'csharp', 'python']
-        project_framework = ['spring', 'quarkus', 'dotnet']
-        project_database = ['mysql', 'postresql', 'redis', 'mongoDB']
-        project_protocols = ['http', 'mqtt', 'amqp']
+        project_status = config.repo_yml.get('project', {}).get('status', [])
+        project_language = config.repo_yml.get('project', {}).get('language', [])
+        project_framework = config.repo_yml.get('project', {}).get('framework', [])
+        project_database = config.repo_yml.get('project', {}).get('database', [])
+        project_protocols = config.repo_yml.get('project', {}).get('protocols', [])
 
         for key in required_keys:
             if key not in metadata:
@@ -65,17 +63,17 @@ class RepositoryFileRepositoryYMLVerification(VerificationInterface):
         if metadata['project']['status'] not in project_status:
             return cls.failure("Status do projeto invalido")
 
-        invalids = set(metadata['project']['stack']['language']) - set(project_language)
-        if invalids:
-            return cls.failure(f"Linguagem invalida: {', '.join(invalids)}")
+        language = metadata['project']['stack']['language']
+        if language is not None and language not in project_language:
+            return cls.failure(f"Linguagem {language} invalida")
 
-        invalids = set(metadata['project']['stack']['framework']) - set(project_framework)
-        if invalids:
-            return cls.failure(f"Framework invalido: {', '.join(invalids)}")
+        framework = metadata['project']['stack']['framework']
+        if framework is not None and framework not in project_framework:
+            return cls.failure(f"Framework {framework} invalido")
 
-        invalids = set(metadata['project']['stack']['database']) - set(project_database)
-        if invalids:
-            return cls.failure(f"Banco invalido: {', '.join(invalids)}")
+        database = metadata['project']['stack']['database']
+        if database is not None and database not in project_database:
+            return cls.failure(f"Banco {database} invalido")
 
         invalids = set(metadata['project']['stack']['protocols']) - set(project_protocols)
         if invalids:

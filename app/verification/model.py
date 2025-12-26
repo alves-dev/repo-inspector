@@ -9,7 +9,7 @@ class InspectorConfig:
     github_topics: List[str]
     ignored_rules_by_repo: Dict[str, Set[str]]
     max_days_without_update: int
-
+    repo_yml: dict
 
 class Severity(str, Enum):
     WARNING = "warning"

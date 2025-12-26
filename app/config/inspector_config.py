@@ -39,7 +39,8 @@ class InspectorConfigLoader:
             ignored_rules_by_repo={
                 k: set(v) for k, v in data.get("ignored_rules_by_repo", {}).items()
             },
-            max_days_without_update=data.get("max_days_without_update", 90)
+            max_days_without_update=data.get("max_days_without_update", 90),
+            repo_yml=data.get("repo_yml", {})
         )
 
     def _load_from_yaml(self) -> InspectorConfig:
@@ -56,5 +57,6 @@ class InspectorConfigLoader:
             ignored_rules_by_repo={
                 k: set(v) for k, v in data.get("ignored_rules_by_repo", {}).items()
             },
-            max_days_without_update=data.get("max_days_without_update", 90)
+            max_days_without_update=data.get("max_days_without_update", 90),
+            repo_yml=data.get("repo_yml", {})
         )
