@@ -4,7 +4,7 @@ repository:
   title: Repo inspector
   description: >
     Este script python faz verificações de regras nos repositórios git
-  license: GPL-3.0
+  license: GPL-3
   type: code
   topics:
     - python
