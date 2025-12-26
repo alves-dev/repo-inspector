@@ -3,11 +3,12 @@ schema: v1
 repository:
   title: Repo inspector
   description: >
-    Este script python faz verificações de regras nos repositórios git
+    Este script python faz verificações de regras nos repositórios do github
   license: GPL-3
   type: code
   topics:
     - python
+    - github
   website:
 
 project:

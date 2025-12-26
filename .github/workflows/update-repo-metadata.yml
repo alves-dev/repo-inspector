@@ -1,0 +1,10 @@
+name: Update Repo Info
+
+on:
+  push:
+    paths:
+      - '.repo.yml'
+
+jobs:
+  update-metadata:
+    uses: alves-dev/actions/.github/workflows/update-repo-metadata.yml@develop
