@@ -7,4 +7,6 @@ on:
 
 jobs:
   update-metadata:
+    permissions:
+      contents: write
     uses: alves-dev/actions/.github/workflows/update-repo-metadata.yml@develop
