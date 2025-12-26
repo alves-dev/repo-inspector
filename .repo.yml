@@ -10,6 +10,7 @@ repository:
     - python
     - github
     - git
+    - http
   website:
 
 project:
