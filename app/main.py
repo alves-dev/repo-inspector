@@ -13,6 +13,8 @@ from app.verification.verification_license import RepositoryLicenseVerification
 from app.verification.verification_name import RepositoryNameVerification
 from app.verification.verification_topics import RepositoryTopicsVerification
 from app.verification.verification_updated import RepositoryUpdatedVerification
+from app.verification.verification_old_repository_yml import RepositoryOldFileRepositoryYMLVerification
+from app.verification.verification_repository_yml import RepositoryFileRepositoryYMLVerification
 
 if __name__ == "__main__":
     inspect_loader = InspectorConfigLoader(setting.INSPECTOR_GET_URL,
@@ -25,7 +27,7 @@ if __name__ == "__main__":
 
     verifications = [RepositoryNameVerification, RepositoryDescriptionVerification, RepositoryUpdatedVerification,
                      RepositoryBranchVerification, RepositoryLicenseVerification, RepositoryTopicsVerification,
-                     ]
+                     RepositoryOldFileRepositoryYMLVerification, RepositoryFileRepositoryYMLVerification]
 
     repo_map: dict[str: list[RepoVerificationResult]] = {}
 

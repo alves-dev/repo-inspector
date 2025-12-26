@@ -1,0 +1,23 @@
+schema: v1
+
+repository:
+  title: Repo inspector
+  description: >
+    Este script python faz verificações de regras nos repositórios git
+  license: GPL-3.0
+  type: code
+  topics:
+    - python
+  website:
+
+project:
+  status: development
+  stack:
+    language: python
+    framework:
+    database:
+    protocols:
+      - http
+      - git
+    tools:
+      - github
