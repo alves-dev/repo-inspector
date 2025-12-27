@@ -6,15 +6,16 @@ from app.github.client import GithubClient as gitClient
 from app.github.models import Repository
 from app.output import manager as output
 from app.repository.store import get_store
+from app.verification.actions.update_repo_metadata_yml import WorkflowsFileUpdateRepoMetadataYMLVerification
 from app.verification.model import RepoVerificationResult
 from app.verification.verification_branch import RepositoryBranchVerification
 from app.verification.verification_description import RepositoryDescriptionVerification
 from app.verification.verification_license import RepositoryLicenseVerification
 from app.verification.verification_name import RepositoryNameVerification
-from app.verification.verification_topics import RepositoryTopicsVerification
-from app.verification.verification_updated import RepositoryUpdatedVerification
 from app.verification.verification_old_repository_yml import RepositoryOldFileRepositoryYMLVerification
 from app.verification.verification_repository_yml import RepositoryFileRepositoryYMLVerification
+from app.verification.verification_topics import RepositoryTopicsVerification
+from app.verification.verification_updated import RepositoryUpdatedVerification
 
 if __name__ == "__main__":
     inspect_loader = InspectorConfigLoader(setting.INSPECTOR_GET_URL,
@@ -25,9 +26,19 @@ if __name__ == "__main__":
 
     repositories: list[Repository] = gitClient.get_repos_by_token()
 
-    verifications = [RepositoryNameVerification, RepositoryDescriptionVerification, RepositoryUpdatedVerification,
-                     RepositoryBranchVerification, RepositoryLicenseVerification, RepositoryTopicsVerification,
-                     RepositoryOldFileRepositoryYMLVerification, RepositoryFileRepositoryYMLVerification]
+    verifications = [
+        RepositoryNameVerification,
+        RepositoryDescriptionVerification,
+        RepositoryUpdatedVerification,
+        RepositoryBranchVerification,
+        RepositoryLicenseVerification,
+        RepositoryTopicsVerification,
+
+        RepositoryOldFileRepositoryYMLVerification,
+        RepositoryFileRepositoryYMLVerification,
+
+        WorkflowsFileUpdateRepoMetadataYMLVerification
+    ]
 
     repo_map: dict[str: list[RepoVerificationResult]] = {}
 
