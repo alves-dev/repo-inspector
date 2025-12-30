@@ -6,14 +6,16 @@ from app.github.client import GithubClient as gitClient
 from app.github.models import Repository
 from app.output import manager as output
 from app.repository.store import get_store
+from app.verification.actions.readme_generate_yml import WorkflowsFileReadmeGenerateYMLVerification
 from app.verification.actions.update_repo_metadata_yml import WorkflowsFileUpdateRepoMetadataYMLVerification
+from app.verification.files.old_repository_yml import RepositoryOldFileRepositoryYMLVerification
+from app.verification.files.readme_base_md import RepositoryFileReadmeBaseMDVerification
+from app.verification.files.repo_yml import RepositoryFileRepoYMLVerification
 from app.verification.model import RepoVerificationResult
 from app.verification.verification_branch import RepositoryBranchVerification
 from app.verification.verification_description import RepositoryDescriptionVerification
 from app.verification.verification_license import RepositoryLicenseVerification
 from app.verification.verification_name import RepositoryNameVerification
-from app.verification.verification_old_repository_yml import RepositoryOldFileRepositoryYMLVerification
-from app.verification.verification_repository_yml import RepositoryFileRepositoryYMLVerification
 from app.verification.verification_topics import RepositoryTopicsVerification
 from app.verification.verification_updated import RepositoryUpdatedVerification
 
@@ -34,10 +36,14 @@ if __name__ == "__main__":
         RepositoryLicenseVerification,
         RepositoryTopicsVerification,
 
+        # Files
         RepositoryOldFileRepositoryYMLVerification,
-        RepositoryFileRepositoryYMLVerification,
+        RepositoryFileRepoYMLVerification,
+        RepositoryFileReadmeBaseMDVerification,
 
-        WorkflowsFileUpdateRepoMetadataYMLVerification
+        # Actions
+        WorkflowsFileUpdateRepoMetadataYMLVerification,
+        WorkflowsFileReadmeGenerateYMLVerification
     ]
 
     repo_map: dict[str: list[RepoVerificationResult]] = {}

@@ -6,7 +6,7 @@ from app.verification.model import RepoVerificationResult, Severity, InspectorCo
 from app.verification.verification import VerificationInterface
 
 
-class RepositoryFileRepositoryYMLVerification(VerificationInterface):
+class RepositoryFileRepoYMLVerification(VerificationInterface):
     KEY = 'git.repository.file.repo_yml'
     RULE_DESCRIPTION = "Verifica se existe o .repo.yml na raiz do repo e se é valido"
     SEVERITY = Severity.ERROR

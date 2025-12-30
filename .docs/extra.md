@@ -1,1 +1,0 @@
-Este script python faz verificações de regras nos repositórios git
