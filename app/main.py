@@ -56,6 +56,8 @@ if __name__ == "__main__":
             continue
 
         for verification in verifications:
+            if verification.KEY in inspect_config.ignored_rules_by_repo.get(repo.name, []):
+                continue
             result: RepoVerificationResult = verification.verify(repo, inspect_config)
             repo_verifications.append(result)
 
