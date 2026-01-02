@@ -75,8 +75,9 @@ class RepositoryFileRepoYMLVerification(VerificationInterface):
         if database is not None and database not in project_database:
             return cls.failure(f"Banco {database} invalido")
 
-        invalids = set(metadata['project']['stack']['protocols']) - set(project_protocols)
-        if invalids:
-            return cls.failure(f"Protocolos invalidos: {', '.join(invalids)}")
+        if metadata['project']['stack']['protocols'] is not None:
+            invalids = set(metadata['project']['stack']['protocols']) - set(project_protocols)
+            if invalids:
+                return cls.failure(f"Protocolos invalidos: {', '.join(invalids)}")
 
         return cls.PASSED
