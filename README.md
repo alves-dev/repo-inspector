@@ -58,6 +58,6 @@ template_version=v1
 
 <p align="center">
   <sub style="color:#94A3B8;">
-    Atualizado em 2025-12-30 12:46
+    Atualizado em 2026-01-02 14:40
   </sub>
 </p>
