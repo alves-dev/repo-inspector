@@ -1,25 +1,29 @@
 schema: v1
 
 repository:
-  title: Repo inspector
-  description: >
-    Este script python faz verificações de regras nos repositórios do github
-  license: GPL-3
+  title: Life Admin
+  description: Plataforma interna para minha administração pessoal, financeira, profissional, etc.
+  license: NO-LICENSE
   type: code
   topics:
-    - python
-    - github
-    - git
-  website:
+    - java
+    - spring
+    - thymeleaf
+    - mysql
+    - redis
+  website: https://admin.alves-dev.com
 
 project:
   status: development
   stack:
-    language: python
-    framework:
-    database:
+    language: java
+    framework: spring
+    database: mysql
     protocols:
       - http
-      - git
     tools:
-      - github
+      - redis
+      - docker
+      - thymeleaf
+      - gradle
+      - modulith
